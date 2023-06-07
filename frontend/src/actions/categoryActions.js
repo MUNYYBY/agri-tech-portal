@@ -23,6 +23,8 @@ import {
 } from "../constants/categoryConstant";
 import { logout } from "./userActions";
 
+import { API_URL } from "./API_URL";
+
 export const listCategory =
   (keyword = "", pageNumber = "") =>
   async (dispatch) => {
@@ -30,7 +32,7 @@ export const listCategory =
       dispatch({ type: CATEGORY_LIST_REQUEST });
 
       const { data } = await axios.get(
-        `/api/category?keyword=${keyword}&pageNumber=${pageNumber}`
+        `${API_URL}/api/category?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -52,7 +54,7 @@ export const listCategoryDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_DELETE_REQUEST });
 
-    const { data } = await axios.get(`/api/category/${id}`);
+    const { data } = await axios.get(`${API_URL}/api/category/${id}`);
 
     dispatch({
       type: CATEGORY_DETAILS_SUCCESS,
@@ -85,7 +87,7 @@ export const deleteCategory = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/category/${id}`, config);
+    await axios.delete(`${API_URL}/api/category/${id}`, config);
 
     dispatch({
       type: CATEGORY_DELETE_SUCCESS,
@@ -121,7 +123,7 @@ export const createCategory = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/category`, {}, config);
+    const { data } = await axios.post(`${API_URL}/api/category`, {}, config);
 
     dispatch({
       type: CATEGORY_CREATE_SUCCESS,
@@ -160,7 +162,7 @@ export const updateCategory = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/category/${product._id}`,
+      `${API_URL}/api/category/${product._id}`,
       product,
       config
     );
